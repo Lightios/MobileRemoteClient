@@ -60,7 +60,7 @@ You’ll need to set up the **Mobile Remote Server** on your Windows machine.
 Here's what the app looks like in action:
 
 ![Mobile Remote Client UI]
-<img src="screenshots/main.png" alt="To-Do List" width="200"/>
+<img src="screenshots/main.png" alt="App UI" width="200"/>
 *(Replace with actual hosted image link if needed)*
 
 > Note: In the screenshot, the device is connected to the server, and volume is set to 65%.
