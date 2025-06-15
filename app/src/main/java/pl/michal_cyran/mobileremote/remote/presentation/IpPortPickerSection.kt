@@ -29,7 +29,7 @@ fun IpPortPickerSection(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF1E293B).copy(alpha = 0.5f) // slate-800/50
         ),
@@ -59,7 +59,6 @@ fun IpPortPickerSection(
                 value = ip,
                 onValueChange = onIpChange,
                 modifier = Modifier.fillMaxWidth(),
-                readOnly = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFF3B82F6),
                     unfocusedBorderColor = Color(0xFF475569),
@@ -80,7 +79,6 @@ fun IpPortPickerSection(
                 value = port,
                 onValueChange = onPortChange,
                 modifier = Modifier.fillMaxWidth(),
-                readOnly = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFF3B82F6),
                     unfocusedBorderColor = Color(0xFF475569),
