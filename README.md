@@ -35,7 +35,7 @@ Perfect for scenarios where your laptop is just out of reach — like watching m
 ### 1. Setup the Server 🖥️
 
 You’ll need to set up the **Mobile Remote Server** on your Windows machine.  
-👉 [Link to Server Project](#) *(Insert your server repo link here)*
+👉 [Link to Server Project](#)
 
 ### 2. Install the Mobile Client 📲
 
@@ -59,9 +59,7 @@ You’ll need to set up the **Mobile Remote Server** on your Windows machine.
 
 Here's what the app looks like in action:
 
-![Mobile Remote Client UI]
-<img src="screenshots/main.png" alt="To-Do List" width="200"/>
-*(Replace with actual hosted image link if needed)*
+<img src="screenshots/main.png" alt="App UI" width="200"/>
 
 > Note: In the screenshot, the device is connected to the server, and volume is set to 65%.
 
