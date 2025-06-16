@@ -30,6 +30,8 @@ fun RemoteControlScreen(
     onVolumeChange: (Float) -> Unit = {},
     onMuteToggle: () -> Unit = {},
     onPlayToggle: () -> Unit = {},
+    onLeftArrowClick: () -> Unit = {},
+    onRightArrowClick: () -> Unit = {},
     events: Flow<RemoteEvent>
 ) {
     val context = LocalContext.current
@@ -52,9 +54,9 @@ fun RemoteControlScreen(
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF0F172A), // slate-900
-                        Color(0xFF1E293B), // slate-800
-                        Color(0xFF0F172A)  // slate-900
+                        Color(0xFF0F172A),
+                        Color(0xFF1E293B),
+                        Color(0xFF0F172A)
                     )
                 )
             )
@@ -69,47 +71,24 @@ fun RemoteControlScreen(
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Header
-//            HeaderSection()
-
             IpPortPickerSection(
                 ip = ip,
                 port = port,
                 onIpChange = onIpChange,
                 onPortChange = onPortChange,
             )
-            // Connection Status Card
             ConnectionStatusCard(isConnected = isConnected)
 
-            // Volume Control Card
             VolumeControlCard(
                 volume = volume,
                 isMuted = isMuted,
                 isConnected = isConnected,
                 onVolumeChange = onVolumeChange,
                 onMuteToggle = onMuteToggle,
-                onPlayToggle = onPlayToggle
+                onPlayToggle = onPlayToggle,
+                onLeftArrowClick = onLeftArrowClick,
+                onRightArrowClick = onRightArrowClick,
             )
-
-//            TogglePlayButton(
-//                onClick = onTogglePlay,
-//            )
-
-            // Quick Actions Card
-//            QuickActionsCard(
-//                isConnected = isConnected,
-//                onVolumeSet = onVolumeChange,
-//            )
-
-//            Spacer(modifier = Modifier.weight(1f))
-
-            // Footer
-//            Text(
-//                text = "Remote Server Controller v1.0",
-//                style = MaterialTheme.typography.bodySmall,
-//                color = MaterialTheme.colorScheme.onSurfaceVariant,
-//                textAlign = TextAlign.Center
-//            )
         }
     }
 }

@@ -50,6 +50,28 @@ class RemoteViewModel(
         sendToServer()
     }
 
+    fun leftArrowClick() {
+        arrowClick("left")
+    }
+
+    fun rightArrowClick() {
+        arrowClick("right")
+    }
+
+    fun arrowClick(direction: String) {
+        Log.d("RemoteViewModel", "Arrow clicked: $direction")
+        viewModelScope.launch {
+            remoteDataSource
+                .arrowClick(direction)
+                .onSuccess {
+
+                }
+                .onError { error ->
+                    _event.send(RemoteEvent.Error(error))
+                }
+        }
+    }
+
     fun sendToServer() {
         Log.d("RemoteViewModel", "Sending to server: volume=${_volume.value}, isMuted=${_isMuted.value}")
         viewModelScope.launch {
@@ -70,7 +92,7 @@ class RemoteViewModel(
             remoteDataSource
                 .togglePlay()
                 .onSuccess {
-                    // Handle success if needed
+
                 }
                 .onError { error ->
                     _event.send(RemoteEvent.Error(error))

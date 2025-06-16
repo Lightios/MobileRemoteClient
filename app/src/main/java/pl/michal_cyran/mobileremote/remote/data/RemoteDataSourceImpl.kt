@@ -35,6 +35,9 @@ class RemoteDataSourceImpl(
     val playUrl: String
         get() = "$url/toggle-play"
 
+    val arrowUrl: String
+        get() = "$url/arrow-click"
+
      override suspend fun setVolume(value: Int, isMuted: Boolean): Result<Unit, NetworkError> {
          Log.d("RemoteDataSource", "Address:  $url Setting volume to $value, muted: $isMuted")
 
@@ -58,6 +61,17 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun arrowClick(direction: String): Result<Unit, NetworkError> {
+        return safeCall<Unit> {
+            httpClient.post(
+                urlString = arrowUrl,
+            ) {
+                contentType(ContentType.Text.Plain)
+                setBody(direction)
+            }
+        }
+    }
+
     override fun setIpAddress(ipAddress: String) {
         this.ip = ipAddress
         ipProvider.saveIp(ipAddress)
@@ -75,4 +89,6 @@ class RemoteDataSourceImpl(
     override fun getPort(): String {
         return port
     }
+
+
 }

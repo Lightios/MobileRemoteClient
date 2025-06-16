@@ -26,6 +26,8 @@ class MainActivity : ComponentActivity() {
                     onVolumeChange = { viewModel.setVolume(it) },
                     onMuteToggle = { viewModel.toggleMute() },
                     onPlayToggle = { viewModel.togglePlay() },
+                    onLeftArrowClick = { viewModel.leftArrowClick() },
+                    onRightArrowClick = { viewModel.rightArrowClick() },
                     onIpChange = { viewModel.setIp(it) },
                     onPortChange = { viewModel.setPort(it) },
                     events = viewModel.events,

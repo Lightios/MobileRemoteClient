@@ -9,6 +9,8 @@ interface RemoteDataSource {
     fun getIp(): String
     fun getPort(): String
 
+
     suspend fun setVolume(value: Int, isMuted: Boolean): Result<Unit, NetworkError>
     suspend fun togglePlay(): Result<Unit, NetworkError>
+    suspend fun arrowClick(direction: String): Result<Unit, NetworkError>
 }
