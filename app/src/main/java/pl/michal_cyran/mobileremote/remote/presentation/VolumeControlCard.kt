@@ -43,12 +43,12 @@ import androidx.compose.ui.unit.sp
 fun VolumeControlCard(
     volume: Float,
     isMuted: Boolean,
-    isConnected: Boolean,
     onVolumeChange: (Float) -> Unit,
     onMuteToggle: () -> Unit,
     onPlayToggle: () -> Unit,
     onLeftArrowClick: () -> Unit,
     onRightArrowClick: () -> Unit,
+    onTabClick: () -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -62,12 +62,18 @@ fun VolumeControlCard(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(
+                    imageVector = Icons.Default.VolumeUp,
+                    contentDescription = "Volume",
+                    tint = Color(0xFF94A3B8), // slate-400
+                    modifier = Modifier.size(24.dp)
+                )
+
                 Text(
                     text = "Volume Control",
                     color = Color.White,
@@ -75,27 +81,21 @@ fun VolumeControlCard(
                     fontWeight = FontWeight.SemiBold
                 )
 
+                Spacer(modifier = Modifier.weight(1f))
+
                 Text(
                     text = "${volume.toInt()}%",
-                    color = Color(0xFF60A5FA), // blue-400
+                    color = Color(0xFF60A5FA),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
 
-            // Volume Slider
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(10.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.VolumeUp,
-                        contentDescription = "Volume",
-                        tint = Color(0xFF94A3B8), // slate-400
-                        modifier = Modifier.size(24.dp)
-                    )
 
                     Slider(
                         value = volume,
@@ -108,37 +108,26 @@ fun VolumeControlCard(
                             inactiveTrackColor = Color(0xFF475569)
                         )
                     )
-
-                    Text(
-                        text = "${volume.toInt()}%",
-                        color = Color(0xFFCBD5E1), // slate-300
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.width(48.dp),
-                        textAlign = TextAlign.End,
-                    )
                 }
 
-                // Volume Scale
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 40.dp),
+                        .padding(horizontal = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     listOf("0%", "25%", "50%", "75%", "100%").forEach { label ->
                         Text(
                             text = label,
-                            color = Color(0xFF64748B), // slate-500
+                            color = Color(0xFF64748B),
                             fontSize = 12.sp
                         )
                     }
                 }
             }
 
-            HorizontalDivider(color = Color(0xFF374151)) // slate-700
+            HorizontalDivider(color = Color(0xFF374151))
 
-            // Control Buttons
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button(
                     onClick = onMuteToggle,
@@ -146,19 +135,21 @@ fun VolumeControlCard(
                         .fillMaxWidth()
                         .height(56.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF2563EB) // blue-600
+                        containerColor = Color(0xFF2563EB)
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
+                    val text = if (isMuted) "Unmute Server" else "Mute Server"
+                    val icon = if (isMuted) Icons.Default.VolumeUp else Icons.Default.VolumeOff
                     Icon(
-                        imageVector = Icons.Default.VolumeOff,
+                        imageVector = icon,
                         contentDescription = "Mute",
                         modifier = Modifier.size(20.dp),
                         tint = Color.White,
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Mute Server",
+                        text = text,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.White
@@ -171,7 +162,7 @@ fun VolumeControlCard(
                         .fillMaxWidth()
                         .height(56.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF059669) // emerald-600
+                        containerColor = Color(0xFF059669)
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -198,7 +189,7 @@ fun VolumeControlCard(
                             .weight(1f)
                             .height(56.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF059669) // emerald-600
+                            containerColor = Color(0xFF059669)
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
@@ -208,13 +199,6 @@ fun VolumeControlCard(
                             modifier = Modifier.size(30.dp),
                             tint = Color.White,
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "Left arrow",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.White,
-                        )
                     }
                     Button(
                         onClick = onRightArrowClick,
@@ -222,7 +206,7 @@ fun VolumeControlCard(
                             .weight(1f)
                             .height(56.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF059669) // emerald-600
+                            containerColor = Color(0xFF059669)
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
@@ -232,16 +216,25 @@ fun VolumeControlCard(
                             modifier = Modifier.size(30.dp),
                             tint = Color.White,
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "Right arrow",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.White,
-                        )
                     }
                 }
-
+                Button(
+                    onClick = onTabClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF2563EB)
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        text = "Press tab",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White,
+                    )
+                }
             }
         }
     }
@@ -252,13 +245,13 @@ fun VolumeControlCard(
 fun VolumeControlCardPreview() {
     VolumeControlCard(
         volume = 75f,
-        isMuted = false,
-        isConnected = true,
+        isMuted = true,
         onVolumeChange = {},
         onMuteToggle = {},
         onPlayToggle = {},
         onLeftArrowClick = {},
-        onRightArrowClick = {}
+        onRightArrowClick = {},
+        onTabClick = {},
     )
 }
 

@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
                     isMuted = viewModel.isMuted.collectAsStateWithLifecycle().value,
                     ip = viewModel.ip.collectAsStateWithLifecycle().value,
                     port = viewModel.port.collectAsStateWithLifecycle().value,
+                    isConnected = viewModel.isConnected.collectAsStateWithLifecycle().value,
                     onVolumeChange = { viewModel.setVolume(it) },
                     onMuteToggle = { viewModel.toggleMute() },
                     onPlayToggle = { viewModel.togglePlay() },
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
                     onRightArrowClick = { viewModel.rightArrowClick() },
                     onIpChange = { viewModel.setIp(it) },
                     onPortChange = { viewModel.setPort(it) },
+                    onTabClick = { viewModel.tabClick() },
                     events = viewModel.events,
                 )
             }

@@ -38,6 +38,17 @@ class RemoteDataSourceImpl(
     val arrowUrl: String
         get() = "$url/arrow-click"
 
+    val tabUrl: String
+        get() = "$url/tab-click"
+
+    override suspend fun testConnection(): Result<Unit, NetworkError> {
+        return safeCall {
+            httpClient.get(
+                urlString = url,
+            )
+        }
+    }
+
      override suspend fun setVolume(value: Int, isMuted: Boolean): Result<Unit, NetworkError> {
          Log.d("RemoteDataSource", "Address:  $url Setting volume to $value, muted: $isMuted")
 
@@ -72,13 +83,24 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun tabClick(): Result<Unit, NetworkError> {
+        return safeCall<Unit> {
+            httpClient.post(
+                urlString = tabUrl,
+            ) {
+                contentType(ContentType.Text.Plain)
+                setBody("tab")
+            }
+        }
+    }
+
     override fun setIpAddress(ipAddress: String) {
         this.ip = ipAddress
         ipProvider.saveIp(ipAddress)
     }
 
     override fun setPort(port: String) {
-        this.port = port.toString()
+        this.port = port
         ipProvider.savePort(port)
     }
 

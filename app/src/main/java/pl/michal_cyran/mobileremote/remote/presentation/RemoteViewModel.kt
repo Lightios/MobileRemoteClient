@@ -35,9 +35,27 @@ class RemoteViewModel(
     private val _event = Channel<RemoteEvent>()
     val events = _event.receiveAsFlow()
 
+    private val _isConnected = MutableStateFlow(false)
+    val isConnected = _isConnected.asStateFlow()
+
     init {
         _ip.update { remoteDataSource.getIp() }
         _port.update { remoteDataSource.getPort() }
+
+        checkConnection()
+    }
+
+    private fun checkConnection() {
+        viewModelScope.launch {
+            remoteDataSource
+                .testConnection()
+                .onSuccess {
+                    _isConnected.value = true
+                }
+                .onError {
+                    _isConnected.value = false
+                }
+        }
     }
 
     fun setVolume(value: Float) {
@@ -64,10 +82,11 @@ class RemoteViewModel(
             remoteDataSource
                 .arrowClick(direction)
                 .onSuccess {
-
+                    _isConnected.update { true }
                 }
                 .onError { error ->
                     _event.send(RemoteEvent.Error(error))
+                    checkConnection()
                 }
         }
     }
@@ -78,10 +97,11 @@ class RemoteViewModel(
             remoteDataSource
                 .setVolume(_volume.value.toInt(), _isMuted.value)
                 .onSuccess {
-
+                    _isConnected.update { true }
                 }
                 .onError { error ->
                     _event.send(RemoteEvent.Error(error))
+                    checkConnection()
                 }
         }
     }
@@ -92,10 +112,26 @@ class RemoteViewModel(
             remoteDataSource
                 .togglePlay()
                 .onSuccess {
-
+                    _isConnected.update { true }
                 }
                 .onError { error ->
                     _event.send(RemoteEvent.Error(error))
+                    checkConnection()
+                }
+        }
+    }
+
+    fun tabClick() {
+        Log.d("RemoteViewModel", "Tab clicked")
+        viewModelScope.launch {
+            remoteDataSource
+                .tabClick()
+                .onSuccess {
+                    _isConnected.update { true }
+                }
+                .onError { error ->
+                    _event.send(RemoteEvent.Error(error))
+                    checkConnection()
                 }
         }
     }

@@ -32,6 +32,7 @@ fun RemoteControlScreen(
     onPlayToggle: () -> Unit = {},
     onLeftArrowClick: () -> Unit = {},
     onRightArrowClick: () -> Unit = {},
+    onTabClick: () -> Unit = {},
     events: Flow<RemoteEvent>
 ) {
     val context = LocalContext.current
@@ -82,12 +83,12 @@ fun RemoteControlScreen(
             VolumeControlCard(
                 volume = volume,
                 isMuted = isMuted,
-                isConnected = isConnected,
                 onVolumeChange = onVolumeChange,
                 onMuteToggle = onMuteToggle,
                 onPlayToggle = onPlayToggle,
                 onLeftArrowClick = onLeftArrowClick,
                 onRightArrowClick = onRightArrowClick,
+                onTabClick = onTabClick,
             )
         }
     }
@@ -107,6 +108,6 @@ private fun RemoteControlScreenPreview() {
         onPlayToggle = {},
         onIpChange = {},
         onPortChange = {},
-        events = emptyFlow<RemoteEvent>()
+        events = emptyFlow()
     )
 }
