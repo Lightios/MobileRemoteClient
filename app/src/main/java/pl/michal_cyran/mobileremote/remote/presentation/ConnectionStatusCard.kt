@@ -25,11 +25,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ConnectionStatusCard(isConnected: Boolean) {
+fun ConnectionStatusCard(
+    isConnected: Boolean,
+) {
+    val text = if (isConnected) "Connected" else "Disconnected"
+    val icon = if (isConnected) Icons.Default.Wifi else Icons.Default.WifiOff
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -57,7 +63,7 @@ fun ConnectionStatusCard(isConnected: Boolean) {
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Wifi,
+                        imageVector = icon,
                         contentDescription = "Connected",
                         tint = Color(0xFF34D399), // green-400
                         modifier = Modifier.size(20.dp)
@@ -65,7 +71,7 @@ fun ConnectionStatusCard(isConnected: Boolean) {
                 }
 
                 Text(
-                    text = "Connected",
+                    text = text,
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold
@@ -76,8 +82,9 @@ fun ConnectionStatusCard(isConnected: Boolean) {
                 color = Color(0xFF10B981).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(20.dp)
             ) {
+                val statusText = if (isConnected) "Online" else "Offline"
                 Text(
-                    text = "Online",
+                    text = statusText,
                     color = Color(0xFF6EE7B7), // green-300
                     fontSize = 14.sp,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
@@ -85,4 +92,16 @@ fun ConnectionStatusCard(isConnected: Boolean) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun ConnectionStatusCardPreview() {
+    ConnectionStatusCard(isConnected = true)
+}
+
+@Preview
+@Composable
+private fun ConnectionStatusCardPreviewOffline() {
+    ConnectionStatusCard(isConnected = false)
 }
