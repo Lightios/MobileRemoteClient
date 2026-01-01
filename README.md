@@ -61,8 +61,6 @@ Here's what the app looks like in action:
 
 <img src="screenshots/main.png" alt="App UI" width="200"/>
 
-> Note: In the screenshot, the device is connected to the server, and volume is set to 65%.
-
 ---
 
 ## ⚠️ Disclaimer
