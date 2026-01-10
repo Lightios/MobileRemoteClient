@@ -33,7 +33,8 @@ fun RemoteControlScreen(
     onLeftArrowClick: () -> Unit = {},
     onRightArrowClick: () -> Unit = {},
     onTabClick: () -> Unit = {},
-    events: Flow<RemoteEvent>
+    events: Flow<RemoteEvent>,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -50,7 +51,7 @@ fun RemoteControlScreen(
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
